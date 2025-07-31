@@ -54,7 +54,6 @@ ALTER TABLE Livro_autor_Escrito ADD CONSTRAINT FK_Livro_autor_Escrito_2
 ALTER TABLE Autor
 ALTER COLUMN Nacionalidade varchar(50);
 
-
 /*INSERINDO DADOS DA TABELA CATEGORIA */
 INSERT INTO Categoria(Nome) Values('Literatura Juvenil');
 INSERT INTO Categoria(Nome) Values('Humor');
@@ -67,6 +66,18 @@ INSERT INTO Autor VALUES ('Marcos Piangers','Brasil');
 INSERT INTO Autor VALUES ('Ciro Botelho','Brasil');
 INSERT INTO Autor VALUES ('Bianca Mol','Brasil');
 
+/*INSERINDO DADOS DA TABELA Editora */
+
+INSERT INTO Editora(Nome) VALUES ('Rocco');
+INSERT INTO Editora(Nome) VALUES ('Wmf Martins Fontes');
+INSERT INTO Editora(Nome) VALUES ('Casa da palavra');
+INSERT INTO Editora(Nome) VALUES ('Belas letras');
+INSERT INTO Editora(Nome) VALUES ('Matrix');
+
+/*INSERINDO DADOS DA TABELA Livro */
+
+INSERT INTO Livro VALUES (;
+
 SELECT C.Codigo, C.Nome
 FROM Categoria AS C
 WHERE C.Nome LIKE '%JUVE%'
@@ -74,3 +85,8 @@ WHERE C.Nome LIKE '%JUVE%'
 SELECT A.ID, A.Nome, A.Nacionalidade
 FROM Autor AS A
 
+SELECT E.ID, E.Nome
+FROM Editora AS E
+
+SELECT *
+FROM Livro AS L
