@@ -271,8 +271,65 @@ SELECT
     (SELECT COUNT(*) FROM FUNCIONARIO) +
     (SELECT COUNT(*) FROM DEPENDENTE)
     AS 'TOTAL PESSOAS'
+GO
 
 -- AVG
-
+SELECT AVG(Salario)
+from FUNCIONARIO
+GO
 
 -- SUM
+SELECT SUM(Salario)
+FROM FUNCIONARIO
+GO
+
+SELECT
+    (SELECT MAX(Salario) FROM FUNCIONARIO) -
+    (SELECT AVG(Salario) from FUNCIONARIO)
+    AS 'DESVIO ACIMA DA MÉDIA'
+GO
+
+-- LIKE
+DECLARE @AnoNascimento Date
+
+SET @AnoNascimento = (SELECT Datanasc 
+                        FROM FUNCIONARIO 
+                        WHERE Pnome = 'Joice')
+
+PRINT YEAR(@AnoNascimento)
+
+SELECT *
+FROM FUNCIONARIO
+WHERE YEAR(Datanasc) LIKE '__72';
+GO
+
+-- IN
+SELECT *
+FROM FUNCIONARIO
+WHERE Salario IN (25000,30000);
+GO
+
+SELECT F.Cpf
+FROM FUNCIONARIO as F
+WHERE F.Pnome = 'Fernando';
+
+SELECT TE.HORAS,TE.Pnr
+FROM TRABALHA_EM AS TE
+WHERE TE.Fcpf = (SELECT F.Cpf
+                    FROM FUNCIONARIO as F
+                    WHERE F.Pnome = 'Fernando');
+
+SELECT F.*
+FROM FUNCIONARIO AS F, TRABALHA_EM AS TE
+WHERE F.Cpf = TE.Fcpf;
+
+SELECT *
+FROM FUNCIONARIO AS F
+JOIN TRABALHA_EM AS TE ON TE.Fcpf = F.Cpf
+WHERE TE.Pnr IN (SELECT Pnr
+                    FROM TRABALHA_EM    
+                    WHERE Fcpf = '33344555587')
+AND TE.Horas IN (SELECT Horas
+                    FROM TRABALHA_EM    
+                    WHERE Fcpf = '33344555587')
+AND NOT F.Pnome = 'Fernando';
