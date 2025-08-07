@@ -235,9 +235,5 @@ AND TE.Horas IN (
 AND NOT F.Pnome = 'Fernando';
 ```
 
----
-
 📌 **Observação final:**
 Esses comandos abrangem o uso de filtros, agregações, subconsultas, joins e ordenações, essenciais para manipulação de dados em SQL.
-
-```
