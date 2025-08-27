@@ -1,0 +1,81 @@
+USE EMPRESA;
+
+SELECT * FROM FUNCIONARIO;
+SELECT * FROM PROJETO;
+SELECT * FROM DEPARTAMENTO;
+
+SELECT F.Pnome, F.Unome, F.Endereco
+FROM FUNCIONARIO AS F
+INNER JOIN DEPARTAMENTO AS D
+on F.Dnr = D.Dnumero
+WHERE D.Dnome = 'Pesquisa';
+
+SELECT f.Pnome,f.Unome
+FROM FUNCIONARIO AS F
+INNER JOIN TRABALHA_EM AS TE ON TE.Fcpf = F.Cpf
+INNER JOIN PROJETO AS P ON TE.Pnr = P.Projnumero
+WHERE P.Projnome = 'ProdutoX';
+
+SELECT P.Projnumero, P.Projnome,D.Dnome, D.Dnumero, F.Unome, f.Datanasc
+FROM FUNCIONARIO AS F
+INNER JOIN DEPARTAMENTO AS D ON D.Cpf_gerente = F.Cpf
+INNER JOIN PROJETO AS P ON P.Dnum = D.Dnumero
+INNER JOIN LOCALIZACAO_DEP AS LD ON LD.Dnumero = D.Dnumero
+WHERE LD.Dlocal = 'Mauá';
+
+
+INSERT INTO FUNCIONARIO (Pnome, Minicial, Unome, Cpf, Datanasc, Endereco, Sexo, Salario, Cpf_supervisor, Dnr)
+VALUES ('Carlos', 'M', 'Ferreira', '12312312311', '1980-02-15', 'Av. Paulista, 1000, São Paulo, SP', 'M', 45000, NULL, NULL);
+
+INSERT INTO FUNCIONARIO (Pnome, Minicial, Unome, Cpf, Datanasc, Endereco, Sexo, Salario, Cpf_supervisor, Dnr)
+VALUES ('Mariana', 'L', 'Gomes', '32132132122', '1985-06-22', 'Rua das Acácias, 500, Rio de Janeiro, RJ', 'F', 42000, NULL, NULL);
+
+INSERT INTO FUNCIONARIO (Pnome, Minicial, Unome, Cpf, Datanasc, Endereco, Sexo, Salario, Cpf_supervisor, Dnr)
+VALUES ('Pedro', 'A', 'Silva', '65465465433', '1990-11-10', 'Rua da Praia, 200, Salvador, BA', 'M', 47000, NULL, NULL);
+
+INSERT INTO DEPARTAMENTO (Dnome, Dnumero)
+VALUES ('Vendas', 6);
+
+INSERT INTO DEPARTAMENTO (Dnome, Dnumero)
+VALUES ('RH', 7);
+
+INSERT INTO DEPARTAMENTO (Dnome, Dnumero)
+VALUES ('TI', 8);
+
+SELECT *
+FROM FUNCIONARIO AS F
+WHERE F.Cpf_supervisor IS NULL;
+
+SELECT F.Pnome AS 'Funcionario_Nome',G.Pnome 'Gerente_Nome'
+FROM FUNCIONARIO AS F
+left JOIN FUNCIONARIO AS G ON F.Cpf_supervisor = G.Cpf;
+
+SELECT *
+FROM DEPARTAMENTO AS D
+LEFT JOIN FUNCIONARIO AS F ON F.Dnr = D.Dnumero
+WHERE F.Cpf IS NULL;
+
+SELECT F.Pnome 
+FROM DEPENDENTE AS DE
+RIGHT JOIN FUNCIONARIO AS F ON F.Cpf = DE.Fcpf
+WHERE DE.Fcpf IS NULL;
+
+SELECT *
+FROM DEPARTAMENTO AS D
+WHERE D.Dnumero NOT IN (SELECT DISTINCT F.DNR FROM FUNCIONARIO AS F WHERE F.Dnr IS NOT NULL );
+
+
+SELECT *
+FROM DEPARTAMENTO AS D
+WHERE NOT EXISTS (SELECT 1 FROM FUNCIONARIO AS F WHERE F.Dnr = D.Dnumero);
+
+SELECT * 
+FROM FUNCIONARIO AS F
+FULL JOIN DEPARTAMENTO AS D ON D.Dnumero = F.Dnr
+
+SELECT F.Pnome 
+FROM FUNCIONARIO AS F
+UNION
+SELECT DE.Nome_dependente
+FROM DEPENDENTE AS DE
+
